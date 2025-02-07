@@ -1,0 +1,14 @@
+__pycach__/
+.ipynb_checkpoints
+*.pyc
+z_*
+.DS_Store
+
+# Environments
+.venv
+.env
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
