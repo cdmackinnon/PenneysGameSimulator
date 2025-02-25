@@ -11,13 +11,18 @@ class Evaluator:
         """
         Evaluate the winner in each previously saved deck for a seed.
 
-        Returns p1Tricks, p2Tricks, p1Cards, p2Cards
+        Returns p1WonOnTricks, p2WonOnTricks, p1WonOnCards, p2WonOnCards
         """
         decks = DeckGenerator(self.seed).load_decks()
-        p1Tricks, p2Tricks = 0, 0
-        p1Cards, p2Cards = 0, 0
+
+        # Initialize counts for tricks and cards won by each player
+        p1WonOnTricks, p2WonOnTricks = 0, 0
+        p1WonOnCards, p2WonOnCards = 0, 0
+
         for deck in decks:
             deck_str = "".join(deck.astype(str))
+            p1Tricks, p2Tricks = 0, 0  # Reset counts for the current deck
+            p1Cards, p2Cards = 0, 0  # Reset counts for the current deck
             index = 0
 
             while index < len(deck_str):
@@ -36,4 +41,16 @@ class Evaluator:
                     p2Tricks += 1
                     p2Cards += p2 - index + len(playerTwo)
                     index = p2 + len(playerTwo)
-        return p1Tricks, p2Tricks, p1Cards, p2Cards
+
+            # After evaluating the current deck, update the total counts
+            if p1Tricks > p2Tricks:
+                p1WonOnTricks += 1
+            elif p2Tricks > p1Tricks:
+                p2WonOnTricks += 1
+
+            if p1Cards > p2Cards:
+                p1WonOnCards += 1
+            elif p2Cards > p1Cards:
+                p2WonOnCards += 1
+
+        return p1WonOnTricks, p2WonOnTricks, p1WonOnCards, p2WonOnCards
