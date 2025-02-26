@@ -33,9 +33,7 @@ def main():
                 print(f"Player 2 Won {p2Tricks} Game(s) Off Tricks and {p2Cards} Off of Cards\n")
             case "3":
                 seed = int(input("Enter seed: "))
-                # TODO consider user input for player choices
-                choices = ["000", "001", "010", "011", "100", "101", "110", "111"]
-                plotter = Plotter(choices, seed)
+                plotter = Plotter(seed)
                 plotter.plot_trick_winning_probs()
                 plotter.plot_cards_won_probs()
             case _:
