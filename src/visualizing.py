@@ -12,19 +12,19 @@ class Plotter:
         self.sampleSize = len(DeckGenerator(seed).load_decks())
         self.trick_probs, self.cards_probs = self.eval.get_wins()
 
-    def plot_trick_winning_probs(self):
+    def plot_trick_winning_probs(self) -> None:
         self._plot_heatmap(
             self.trick_probs,
             f"Trick Win Rates Over {self.sampleSize} Games",
         )
 
-    def plot_cards_won_probs(self):
+    def plot_cards_won_probs(self) -> None:
         self._plot_heatmap(
             self.cards_probs,
             f"Card Win Rates Over {self.sampleSize} Games",
         )
 
-    def _plot_heatmap(self, df, title):
+    def _plot_heatmap(self, df, title) -> None:
         # Create a mask for shared diagonal values
         mask = np.eye(df.shape[0], df.shape[1], dtype=bool)
         cmap = sns.diverging_palette(10, 250, as_cmap=True)
