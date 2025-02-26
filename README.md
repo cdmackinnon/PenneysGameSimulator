@@ -1,7 +1,7 @@
 # Penney's Game Simulator
 
 ## Description
-Penney's Game is a two-player game where each player selects a sequence of "Heads" and "Tails" to determine the winner based on specific outcomes. See [Wikipedia](https://en.wikipedia.org/wiki/Penney%27s_game) for a larger overview. This program simulates a version of the game using playing cards by red or black cards. It generates decks, evaluates game outcomes, and visualizes the results in heatmaps that display winning probabilities based on different criteria (i.e. winning by a majority of tricks or a majority of cards).
+Penney's Game is a two-player game where each player selects a sequence of "Heads" and "Tails" to determine the winner based on specific outcomes. [Wikipedia](https://en.wikipedia.org/wiki/Penney%27s_game) covers its key aspects and insights. This program simulates a version of the game using playing cards with red or black cards. It generates decks, evaluates game outcomes, and visualizes the results in heatmaps that display winning probabilities based on different criteria (i.e. winning by a majority of tricks or cards).
 
 ## Features
 - **Deck Generation**: Generate decks of card sequences based on a provided seed.
