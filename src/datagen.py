@@ -1,8 +1,9 @@
-import numpy as np
-from typing import Tuple
-from src.helpers import PATH_DATA
 import os
 import json
+from typing import Tuple
+import numpy as np
+from src.helpers import PATH_DATA
+
 
 HALF_DECK_SIZE = 26
 
