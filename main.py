@@ -22,7 +22,7 @@ def main():
                 n_decks = int(input("Enter number of decks: "))
                 generator = DeckGenerator(seed)
                 generator.create_decks(n_decks)
-                print(f"Successfully generated {n_decks} decks with seed {seed}")
+                print(f"Successfully generated {n_decks} decks with seed {seed}\n")
             case "2":
                 seed = int(input("Enter seed: "))
                 playerOne = input("Enter player one's choice: ")

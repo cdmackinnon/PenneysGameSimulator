@@ -24,7 +24,7 @@ class Plotter:
             f"Card Win Rates Over {self.sampleSize} Games",
         )
 
-    def _plot_heatmap(self, df, title) -> None:
+    def _plot_heatmap(self, df: pd.DataFrame, title: str) -> None:
         # Create a mask for shared diagonal values
         mask = np.eye(df.shape[0], df.shape[1], dtype=bool)
         cmap = sns.diverging_palette(10, 250, as_cmap=True)

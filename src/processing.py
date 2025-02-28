@@ -1,3 +1,7 @@
+"""
+Module for calculating and retrieving player win percentages
+"""
+
 import json
 import os
 from typing import Tuple
@@ -11,6 +15,11 @@ HANDS = ["000", "001", "010", "011", "100", "101", "110", "111"]
 
 
 class Evaluator:
+    """
+    Class supporting win calculations for a given seed.
+    Stores statistics and how many decks they're for in a json file.
+    """
+
     def __init__(self, seed: int):
         self.seed = seed
         self.results_path = f"{PATH_DATA}/{self.seed}_results.json"
@@ -41,6 +50,8 @@ class Evaluator:
 
         Return pattern is p1TrickWins, p2TrickWins, p1CardWins, p2CardWins
         """
+        # TODO Casting arrays into strings and using string.find is expensive
+        # consider keeping the elements in the array or using regex on the string
 
         # Initialize counts for tricks and cards won by each player
         p1TrickWins, p2TrickWins = 0, 0
