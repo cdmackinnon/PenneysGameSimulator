@@ -34,6 +34,8 @@ Penney's Game is a two-player game where each player selects a sequence of "Head
   
 - For plotting results:
   - Seed (integer): A number for which generated decks to use (must be consistent with one used in deck generation).
+ 
+**This repository contains no pre-generated decks. Start by generating decks with the seed of your choice and then simulate games and plot results using that seed you chose.**
 
 ## TODOs
 - Implement user input validation to handle unexpected or incorrect inputs gracefully.
