@@ -50,10 +50,11 @@ class Plotter:
         plt.ylabel("Player Sequences", fontsize=12, labelpad=12)
         plt.title(title, fontsize=14)
 
-        # plt.show()
     
     def plot(self) -> None:
         self.plot_trick_winning_probs()
         self.plot_cards_won_probs()
+        plt.savefig('data/trick_winning_probs.png')
+        plt.savefig('data/cards_won_probs.png')
         plt.show()
         
