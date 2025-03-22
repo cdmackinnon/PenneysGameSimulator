@@ -15,20 +15,26 @@ class Plotter:
     def plot_trick_winning_probs(self) -> None:
         self._plot_heatmap(
             self.trick_probs,
-            f"Player Win Rates By Tricks Over {self.sampleSize} Games",
+            f"Player Win Percents By Tricks Over {self.sampleSize} Games",
         )
 
     def plot_cards_won_probs(self) -> None:
         self._plot_heatmap(
             self.cards_probs,
-            f"Player Win Rates By Cards Over {self.sampleSize} Games",
+            f"Player Win Percents By Cards Over {self.sampleSize} Games",
         )
 
     def _plot_heatmap(self, df: pd.DataFrame, title: str) -> None:
-        # change column names with 1 to R and 0 to B
-        # ex: 111 -> RRR, 000 -> BBB
+        # Change column names with 1 to R and 0 to B (e.g., 111 -> RRR, 000 -> BBB)
         df.index = df.index.str.replace("1", "R").str.replace("0", "B")
+        df.columns = df.columns.str.replace("1", "R").str.replace("0", "B")
 
+        # Extract win and tie probabilities as percentages
+        win_probs = df.map(lambda x: float(x.split(" ")[0]) * 100)
+        tie_probs = df.map(lambda x: float(x.split(" ")[1]) * 100)
+
+        # Format the annotation win(tie) percentages
+        annotations = win_probs.map(lambda win: f"{int(win)}") + tie_probs.map(lambda tie: f"({int(tie)})")
 
         # Create a mask for shared diagonal values
         mask = np.eye(df.shape[0], df.shape[1], dtype=bool)
@@ -36,11 +42,11 @@ class Plotter:
 
         plt.figure(figsize=(8, 6))
         ax = sns.heatmap(
-            df,
-            annot=True,
+            win_probs,
+            annot=annotations,
             cmap=cmap,
             linewidths=0.5,
-            fmt=".2f",
+            fmt="",
             mask=mask,
             cbar=False,
         )

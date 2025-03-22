@@ -1,6 +1,3 @@
-"""
-Module for calculating and retrieving player win percentages
-"""
 
 import json
 import os
@@ -44,18 +41,18 @@ class Evaluator:
 
     def _evaluate_decks(
         self, playerOne: str, playerTwo: str, decks: np.ndarray
-    ) -> Tuple[int, int, int, int]:
+    ) -> Tuple[int, int, int, int, int, int]:
         """
         Evaluate multiple decks to determine trick and card wins for both players.
 
-        Return pattern is p1TrickWins, p2TrickWins, p1CardWins, p2CardWins
+        Return pattern is p1TrickWins, p2TrickWins, p1CardWins, p2CardWins, trickTies, cardTies
         """
         # TODO Casting arrays into strings and using string.find is expensive
         # consider keeping the elements in the array or using regex on the string
 
         # Initialize counts for tricks and cards won by each player
-        p1TrickWins, p2TrickWins = 0, 0
-        p1CardWins, p2CardWins = 0, 0
+        p1TrickWins, p2TrickWins, trickTies = 0, 0, 0
+        p1CardWins, p2CardWins, cardTies = 0, 0, 0
 
         for deck in decks:
             deck_str = "".join(deck.astype(str))
@@ -89,17 +86,22 @@ class Evaluator:
                     index = p2 + len(playerTwo)
 
             # After evaluating the current deck, update the total counts
-            # If tricks or cards are equal, we consider it a win for both players
-            if p1Tricks >= p2Tricks:
+            # If tricks or cards are equal, we consider it a tie
+            if p1Tricks > p2Tricks:
                 p1TrickWins += 1
-            if p2Tricks >= p1Tricks:
+            elif p2Tricks > p1Tricks:
                 p2TrickWins += 1
-            if p1Cards >= p2Cards:
-                p1CardWins += 1
-            if p2Cards >= p1Cards:
-                p2CardWins += 1
+            else:
+                trickTies += 1
 
-        return p1TrickWins, p2TrickWins, p1CardWins, p2CardWins
+            if p1Cards > p2Cards:
+                p1CardWins += 1
+            elif p2Cards > p1Cards:
+                p2CardWins += 1
+            else:
+                cardTies += 1
+
+        return p1TrickWins, p2TrickWins, p1CardWins, p2CardWins, trickTies, cardTies
 
     def _get_new_decks(self) -> np.ndarray:
         """
@@ -125,11 +127,11 @@ class Evaluator:
             for playerTwo in HANDS:
                 key = f"{playerOne}_{playerTwo}"
                 if key not in self.results["results"]:
-                    self.results["results"][key] = [0, 0, 0, 0]
+                    self.results["results"][key] = [0, 0, 0, 0, 0, 0]
 
                 results = self._evaluate_decks(playerOne, playerTwo, new_decks)
                 self.results["results"][key] = [
-                    self.results["results"][key][i] + results[i] for i in range(4)
+                    self.results["results"][key][i] + results[i] for i in range(6)
                 ]
 
         self.results["num_decks"] += len(new_decks)
@@ -147,10 +149,17 @@ class Evaluator:
         # Populate DataFrames with results
         for key, value in self.results["results"].items():
             playerOne, playerTwo = key.split("_")
-            p1Tricks, p2Tricks, p1Cards, p2Cards = value
-            trick_probs.at[playerOne, playerTwo] = p1Tricks / (p1Tricks + p2Tricks)
-            card_probs.at[playerOne, playerTwo] = p1Cards / (p1Cards + p2Cards)
+            p1Tricks, p2Tricks, p1Cards, p2Cards, tTies, cTies = value
 
-        trick_probs = trick_probs.apply(pd.to_numeric, errors="coerce")
-        card_probs = card_probs.apply(pd.to_numeric, errors="coerce")
+            # Tricks dataframe
+            trick_win_prob = p1Tricks / (p1Tricks + p2Tricks + tTies)
+            trick_tie_prob = tTies / (p1Tricks + p2Tricks + tTies)
+            trick_probs.at[playerOne, playerTwo] = f"{trick_win_prob:.2f} {trick_tie_prob:.2f}"
+
+            # Cards dataframe
+            card_win_prob = p1Cards / (p1Cards + p2Cards + cTies)
+            card_tie_prob = cTies / (p1Cards + p2Cards + cTies)
+            card_probs.at[playerOne, playerTwo] = f"{card_win_prob:.2f} {card_tie_prob:.2f}"
+
         return trick_probs, card_probs
+
