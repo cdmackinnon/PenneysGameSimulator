@@ -1,5 +1,7 @@
+import glob
 import os
 import json
+import uuid
 from typing import Tuple
 import numpy as np
 from src.helpers import PATH_DATA
@@ -30,6 +32,13 @@ class DeckGenerator:
         Generate and return n shuffled decks
         All generated decks and the RNG state are always saved
         """
+        # Github file limit is 100mb
+        # To avoid reaching this limit decks are contained in multiple files
+        # 200k decks is about 80mb, so we divide generation into 200k batches
+        if n_decks > 200_000:
+            self.create_decks(n_decks - 200_000)
+            n_decks = 200_000
+
         # Restore existing RNG state if possible
         state = self.load_rng_state()
         if state:
@@ -39,10 +48,12 @@ class DeckGenerator:
         decks = np.tile(self.init_deck, (n_decks, 1))
         self.rng.permuted(decks, axis=1, out=decks)
 
+        # Generates a uuid to differentiate npy files for the same seed
+        unique_id = uuid.uuid4()
+
         # Save the decks and RNG state
-        path = f"{PATH_DATA}/{self.seed}.npy"
-        if os.path.exists(path):
-            decks = np.vstack((self.load_decks(), decks))  # Append new decks
+        path = f"{PATH_DATA}/{self.seed}_{unique_id}.npy"
+
         np.save(path, decks)
         self._save_rng_state()
 
@@ -70,4 +81,14 @@ class DeckGenerator:
         """
         Load previously stored decks from a .npy file.
         """
-        return np.load(f"{PATH_DATA}/{self.seed}.npy")
+        # TODO add any error handling whatsoever...
+        # Beware file not found, corrupted file, empty file
+
+        # retreive every file corresponding to the seed
+        file_list = glob.glob(f"{PATH_DATA}/{self.seed}_*.npy")
+        # Combine all of the files of decks into one list
+        decks = [np.load(file_path) for file_path in file_list]
+        # Combine the decks into one array
+        combined_decks = np.concatenate(decks, axis=0)
+        return combined_decks
+
