@@ -18,7 +18,7 @@ def main():
                 generator = DeckGenerator(seed)
                 generator.create_decks(n_decks)
                 print(f"Successfully generated {n_decks} decks with seed {seed}\n")
-            # TODO: Implement this feature in the future
+            # TODO: Reimplement this feature in the future
             # case "X":
             #     seed = int(input("Enter seed: "))
             #     playerOne = input("Enter player one's choice: ")

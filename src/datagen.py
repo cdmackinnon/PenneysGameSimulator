@@ -9,6 +9,10 @@ HALF_DECK_SIZE = 26
 
 
 class DeckGenerator:
+    """
+    Class for generating decks for a given seed
+    Generation follows a deterministic order by seed by saving random states. 
+    """
     def __init__(self, seed: int, half_deck_size: int = HALF_DECK_SIZE):
         self.seed = seed
         self.half_deck_size = half_deck_size
