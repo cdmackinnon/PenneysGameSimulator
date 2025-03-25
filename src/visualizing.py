@@ -75,8 +75,8 @@ class Plotter:
         Run the plotting options all together
         """
         self.plot_trick_winning_probs()
-        self.plot_cards_won_probs()
         plt.savefig('data/trick_winning_probs.png')
+        self.plot_cards_won_probs()
         plt.savefig('data/cards_won_probs.png')
         plt.show()
         
