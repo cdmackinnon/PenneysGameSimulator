@@ -14,7 +14,7 @@ HANDS = ["000", "001", "010", "011", "100", "101", "110", "111"]
 class Evaluator:
     """
     Class supporting win calculations for a given seed.
-    Stores statistics and how many decks they're for in a json file.
+    Stores win & tie statistics and how many decks statistics are based off of in a json file.
     """
 
     def __init__(self, seed: int):
@@ -47,7 +47,7 @@ class Evaluator:
 
         Return pattern is p1TrickWins, p2TrickWins, p1CardWins, p2CardWins, trickTies, cardTies
         """
-        # TODO Casting arrays into strings and using string.find is expensive
+        # TODO: Casting arrays into strings and using string.find is expensive (relatively)...
         # consider keeping the elements in the array or using regex on the string
 
         # Initialize counts for tricks and cards won by each player
@@ -114,8 +114,8 @@ class Evaluator:
 
     def update_wins(self) -> None:
         """
-        Update the results with newly generated decks since the last evaluation.
-        Save the results to a json file.
+        Update the total results with newly generated decks since the last evaluation.
+        Save the results to a json file for retreival. 
         """
         new_decks = self._get_new_decks()
 
