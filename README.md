@@ -27,7 +27,8 @@ Penney's Game is a two-player game where each player selects a sequence of "Head
   - _Note: Seeds are persistent and generated decks and random states will be stored across runtimes for deterministic behavior._
   
 - For plotting results:
-  - Seed (integer): A number for which generated decks to use (must be consistent with one used in deck generation).
+  - Seed (integer): A number for which seed to visualize (must be consistent with one used in deck generation).
+  - _Only a single seed is visualized at a time_
  
 **Seed 0 contains 1M precomputed decks for which a heatmap can be instantly generated. Choose option 2 and input seed 0 to view this.**
 
