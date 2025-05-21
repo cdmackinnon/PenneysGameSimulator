@@ -21,7 +21,7 @@ class Plotter:
         """
         self._plot_heatmap(
             self.trick_probs,
-            f"Player Win Percents By Tricks Over {self.sampleSize} Games (Tie %)",
+            f"Player Win Percents By Tricks Over {self.sampleSize:,} Games (Tie %)",
         )
 
     def plot_cards_won_probs(self) -> None:
@@ -30,7 +30,7 @@ class Plotter:
         """
         self._plot_heatmap(
             self.cards_probs,
-            f"Player Win Percents By Cards Over {self.sampleSize} Games (Tie %)",
+            f"Player Win Percents By Cards Over {self.sampleSize:,} Games (Tie %)",
         )
 
     def _plot_heatmap(self, df: pd.DataFrame, title: str) -> None:
