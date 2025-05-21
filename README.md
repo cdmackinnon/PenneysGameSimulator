@@ -10,15 +10,19 @@ Penney's Game is a two-player game where each player selects a sequence of "Head
 ## How to Run
 1. Clone the repository
 2. Install Python (3.12.4)
-3. Dependencies are installed automatically but can be done manually if desired (using [uv](https://github.com/astral-sh/uv)):
+3. Install [uv](https://github.com/astral-sh/uv)
    ```bash
-   uv add numpy pandas matplotlib seaborn
+   pip install uv
    ```
-5. Run the main script:
+5. Dependencies are installed upon first run, but may be done manually with
+   ```bash
+   uv sync
+   ```
+6. Run the main script:
    ```bash
    uv run main.py
    ```
-6. Follow the on-screen prompts to generate decks or calculate games and plot results.
+7. Follow the on-screen prompts to generate decks or calculate games and plot results.
 
 ## Expected Inputs
 - For generating decks:
