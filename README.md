@@ -1,7 +1,17 @@
 # Penney's Game Simulator
 
 ## Description
-Penney's Game is a two-player game where each player selects a sequence of "Heads" and "Tails" on a coin. The coin is flipped until either sequence occurs, and whoever's first wins. [Wikipedia](https://en.wikipedia.org/wiki/Penney%27s_game) covers its key aspects and insights. This specific program simulates a version of the game using playing cards with red or black cards. This introduces a new layer of conditional probability. It generates decks and visualizes the game outcomes in heatmaps that display winning and tie probabilities based on different criteria (i.e. winning by a majority of tricks or cards).
+Penney's Game is a two-player game where each player selects a sequence of "Heads" and "Tails" on a coin. The coin is flipped until either sequence occurs, and whoever's first wins. [Wikipedia](https://arc.net/l/quote/opdootvb) covers its key aspects and insights. This specific program simulates a version of the game using playing cards with red or black cards. This introduces a new layer of conditional probability. It generates decks and visualizes the game outcomes in heatmaps that display winning and tie probabilities based on different criteria (i.e. winning by a majority of tricks or cards).
+
+Wikipedia only shows win percentages for the best strategies but lacks information on other combinations of a player's choosing. [Wikipedia's percentages](https://arc.net/l/quote/fmpqixcb) also appear to be slightly off. _B and R stand for Black and Red respectively._
+
+<div align="center">
+   <img src="data/cards_won_probs.png" alt="Win Rates By Cards Won" width=1000>
+</div>
+
+<div align="center">
+   <img src="data/trick_winning_probs.png" alt="Win Rates By Tricks Won" width=1000>
+</div>
 
 ## Features
 - **Deck Generation**: Generate decks of card sequences based on a provided seed.
